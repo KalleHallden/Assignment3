@@ -5,16 +5,8 @@ public class Employee {
 
     private String name;
     private final String ID;
-    private double grossSalary;
-    private double netSalary;
-    private double totalSalary;
-
-    public double getTotalSalary() {
-        return totalSalary;
-    }
-    public void setTotalSalary() {
-        totalSalary = getGrossSalary();
-    }
+    protected double grossSalary;
+    protected double netSalary;
 
     public String getName() {
         return name;
@@ -29,7 +21,6 @@ public class Employee {
     }
 
     public double getGrossSalary() {
-        grossSalary = grossSalary;
         return grossSalary;
     }
 
@@ -39,13 +30,10 @@ public class Employee {
     }
 
     public void setNetSalary() {
-
         netSalary = grossSalary - (grossSalary * 0.1);
-
     }
 
     public double getNetSalary() {
-
         return netSalary;
     }
 
@@ -63,7 +51,7 @@ public class Employee {
     public void printEmployee(){
         System.out.println("ID: " + this.getID());
         System.out.println("Name: " + this.getName());
-        System.out.println("Gross salary: " + this.getGrossSalary());
+        System.out.println("Gross salary: " + this.grossSalary);
         System.out.println("Net salary: " + this.getNetSalary());
     }
 }

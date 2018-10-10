@@ -4,16 +4,6 @@ public class Manager extends Employee {
 
     private String degree;
     private double bonus;
-    private double totalSalary;
-
-    @Override
-    public void setTotalSalary() {
-        totalSalary = getBonus();
-    }
-    @Override
-    public double getTotalSalary() {
-        return totalSalary;
-    }
 
     public String getDegree() {
         return degree;
@@ -27,6 +17,11 @@ public class Manager extends Employee {
         return this.getGrossSalary() * bonus;
     }
 
+    @Override
+    public double getGrossSalary() {
+        return super.getGrossSalary() * bonus;
+    }
+
     public void setBonus() {
         if (degree.equalsIgnoreCase("BSc")) {
             this.bonus = 1.1;
@@ -35,8 +30,13 @@ public class Manager extends Employee {
             this.bonus = 1.2;
         }
         if (degree.equalsIgnoreCase("Phd")) {
-            this.bonus = 1.2;
+            this.bonus = 1.35;
         }
+    }
+
+    @Override
+    public double getNetSalary() {
+        return netSalary = (super.getGrossSalary() * bonus) * 0.9;
     }
 
     public Manager(String name, String ID, double grossSalary, String degree){
@@ -50,6 +50,6 @@ public class Manager extends Employee {
         super.printEmployee();
         System.out.println("Degree: " + this.degree);
         System.out.println("Bonus: " + this.bonus);
-        System.out.println("New gross salary: " + this.getBonus());
+        System.out.println("New gross salary: " + this.getGrossSalary());
     }
 }

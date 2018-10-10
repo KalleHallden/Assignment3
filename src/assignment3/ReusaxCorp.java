@@ -80,7 +80,6 @@ public class ReusaxCorp {
         Manager manager = new Manager(name, ID, grossalary, degree);
         manager.setBonus();
         manager.setNetSalary();
-        manager.setTotalSalary();
         employees.add(manager);
     }
 
@@ -97,8 +96,6 @@ public class ReusaxCorp {
         Director director = new Director(name, ID, grossalary, degree, department);
         director.setBonus();
         director.setNetSalary();
-        director.setDirectorSalary();
-        director.setTotalSalary();
         employees.add(director);
 
     }
@@ -410,8 +407,8 @@ public class ReusaxCorp {
         Double benefit = input.nextDouble();
         Director.benefit = benefit;
 
-        for (int i = 0; i < employees.size(); i++) {
-            System.out.println("Salary total: " + employees.get(i).getTotalSalary());
+        for (Employee employee : employees) {
+            System.out.println("Salary total: " + employee.getNetSalary());
         }
     }
 
