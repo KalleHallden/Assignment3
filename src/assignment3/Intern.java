@@ -16,6 +16,18 @@ public class Intern extends Employee {
         super(name, ID, grossSalary);
         this.gpa = gpa;
     }
+    @Override
+    public void setGrossSalary(double grossSalary) {
+        if (this.gpa <= 5) {
+            grossSalary = 0.0;
+         }
+         if (this.gpa > 5 && this.gpa < 8) {
+             grossSalary = grossSalary;
+         } if (this.gpa >= 8) {
+             grossSalary = grossSalary + 1000;
+        }
+    }
+
 
     @Override
     public void printEmployee() {
