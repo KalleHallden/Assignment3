@@ -1,9 +1,19 @@
-package assignment3;
+package assignment3.Classes;
+
+import assignment3.Classes.Employee;
 
 public class Manager extends Employee {
 
     private String degree;
     private double bonus;
+
+    final static public double BACHELOR_PERCENT_BONUS = 1.10;
+
+    final static public double MASTER_PERCENT_BONUS = 1.20;
+
+    final static public double PHD_PERCENT_BONUS = 1.35;
+
+    final static public double TEN_PERCENT_TAX = 0.9;
 
     public String getDegree() {
         return degree;
@@ -24,22 +34,22 @@ public class Manager extends Employee {
 
     public void setBonus() {
         if (degree.equalsIgnoreCase("BSc")) {
-            this.bonus = 1.1;
+            this.bonus = BACHELOR_PERCENT_BONUS;
         }
         if (degree.equalsIgnoreCase("MSc")) {
-            this.bonus = 1.2;
+            this.bonus = MASTER_PERCENT_BONUS;
         }
         if (degree.equalsIgnoreCase("Phd")) {
-            this.bonus = 1.35;
+            this.bonus = PHD_PERCENT_BONUS;
         }
     }
 
     @Override
     public double getNetSalary() {
-        return netSalary = (super.getGrossSalary() * bonus) * 0.9;
+        return netSalary = (super.getGrossSalary() * bonus) * TEN_PERCENT_TAX;
     }
 
-    public Manager(String name, String ID, double grossSalary, String degree){
+    public Manager(String name, String ID, double grossSalary, String degree) {
         super(name, ID, grossSalary);
         this.degree = degree;
         this.bonus = bonus;

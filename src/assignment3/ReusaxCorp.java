@@ -1,38 +1,32 @@
 package assignment3;
 
-import java.util.Scanner;
+
+import assignment3.Classes.Director;
+import assignment3.Classes.Employee;
+import assignment3.Classes.Intern;
+import assignment3.Classes.Manager;
+import assignment3.Input_Output.IOclass;
+
 import java.util.ArrayList;
 
 
 public class ReusaxCorp {
 
 
-    //private double assets; //for calculating expenses and so on?
 
-    static ArrayList<Employee> employees;
+    public static ArrayList<Employee> employees;
     private IOclass ioRef = new IOclass();
 
-    // private ArrayList<Manager> managers;
-
-    // private ArrayList<Director> directors;
-
-    // private HashMap<String, ArrayList<Employee>> allEmployees;
 
 
     public ReusaxCorp() {
-        this.employees = new ArrayList<>();
-
-        // this.managers = new ArrayList<>();
-
-        // this.allEmployees = new HashMap<>();
-
-        // this.directors = new ArrayList<>();
+        employees = new ArrayList<>();
 
 
     }
 
 
-    public void registerEmployee() {
+    private void registerEmployee() {
         Employee employee;
         String type = ioRef.employeeType();
         if (type != null) {
@@ -95,11 +89,11 @@ public class ReusaxCorp {
     public Employee retrieveEmployee() {
         String ID = ioRef.retrieveEmployee();
         if (employees.size() > 0) {
-            for (int i = 0; i < employees.size(); i++) {
+            for (Employee employee : employees) {
 
-                if (employees.get(i).getID().equals(ID)) {
+                if (employee.getID().equals(ID)) {
                     //employees.get(i).printEmployee();
-                    return employees.get(i);
+                    return employee;
                 } else {
                     System.out.println("An employee of ID " + ID + " is not registered in the system.");
                     return null;
@@ -156,9 +150,8 @@ public class ReusaxCorp {
 
             double totalGrossSalaries = 0;
 
-            for (int i = 0; i < employees.size(); i++) {
-                employees.get(i).getGrossSalary();
-                totalGrossSalaries += employees.get(i).getGrossSalary();
+            for (Employee employee : employees) {
+                totalGrossSalaries += employee.getGrossSalary();
             }
 
             System.out.println("ReusaxCorp's salary expenses are: " + totalGrossSalaries + " SEK.");
@@ -175,9 +168,8 @@ public class ReusaxCorp {
 
             double totalNetSalaries = 0;
 
-            for (int i = 0; i < employees.size(); i++) {
-                employees.get(i).getNetSalary();
-                totalNetSalaries += employees.get(i).getNetSalary();
+            for (Employee employee : employees) {
+                totalNetSalaries += employee.getNetSalary();
             }
 
             System.out.println("ReusaxCorp's salary expenses are: " + totalNetSalaries + " SEK.");
@@ -201,7 +193,6 @@ public class ReusaxCorp {
                 size = employees.size();
 
             }
-            //(Employee employee : employees) {
 
             System.out.println("ReusaxCorp has " + size + " employees registered.");
 
@@ -269,7 +260,7 @@ public class ReusaxCorp {
         } while (option != 11);
     }
 
-    public void promoteToWhat() {
+    private void promoteToWhat() {
         String position = ioRef.promoteToWhat();
         if(position.equalsIgnoreCase("employee")) {
             promoteToEmployee();
@@ -282,7 +273,7 @@ public class ReusaxCorp {
         }
     }
 
-    public void promoteToEmployee() {
+    private void promoteToEmployee() {
         Employee myNewEmployee = retrieveEmployee();
 
         if (myNewEmployee != null) {
@@ -299,7 +290,7 @@ public class ReusaxCorp {
             }
         }
     }
-    public void promoteToManager() {
+    private void promoteToManager() {
         Employee myNewEmployee = retrieveEmployee();
 
         if (myNewEmployee != null) {
@@ -327,7 +318,7 @@ public class ReusaxCorp {
             }
         }
     }
-    public void promoteToDirector() {
+    private void promoteToDirector() {
         Employee myNewEmployee = retrieveEmployee();
         if (myNewEmployee instanceof Intern) {
             Intern newIntern = (Intern) myNewEmployee;

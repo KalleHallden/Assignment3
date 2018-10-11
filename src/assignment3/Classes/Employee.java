@@ -1,12 +1,14 @@
-package assignment3;
+package assignment3.Classes;
 
 
 public class Employee {
 
     private String name;
     private final String ID;
-    protected double grossSalary;
+    public double grossSalary;
     protected double netSalary;
+
+    final static public double TEN_PERCENT_TAX = 0.9;
 
     public String getName() {
         return name;
@@ -30,7 +32,7 @@ public class Employee {
     }
 
     public void setNetSalary() {
-        netSalary = grossSalary - (grossSalary * 0.1);
+        netSalary = grossSalary * TEN_PERCENT_TAX;
     }
 
     public double getNetSalary() {
@@ -48,7 +50,7 @@ public class Employee {
 
     }
 
-    public void printEmployee(){
+    public void printEmployee() {
         System.out.println("ID: " + this.getID());
         System.out.println("Name: " + this.getName());
         System.out.println("Gross salary: " + this.grossSalary);
