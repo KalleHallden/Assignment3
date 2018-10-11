@@ -10,10 +10,12 @@ public class IOclass {
     private String name;
     private String degree;
     private String department;
+    static boolean hasBeenDone;
     private double salary;
     private int gpa;
 
     public String createName(String type) {
+        hasbeenDonNow();
         if (!itequals(ID)) {
             System.out.println("Please enter the name of the " + type + " you want to register: ");
             name = input.nextLine();
@@ -25,6 +27,7 @@ public class IOclass {
     }
 
     public String createID(String type) {
+        hasbeenDonNow();
         if (type != null) {
             System.out.println("Please enter the ID of the " + type + " you want to register:");
             ID = input.nextLine();
@@ -35,30 +38,38 @@ public class IOclass {
     }
 
     public double createSalary(String type) {
+        hasbeenDonNow();
         System.out.println("Please enter the salary of the " + type +" you want to register: ");
         salary = input.nextDouble();
         return salary;
     }
 
     public String createDegree(String type) {
-        input.nextLine();
+        hasbeenDonNow();
         System.out.println("Please enter the degree of the " + type + " you want to register:");
         degree = input.nextLine();
         return degree;
     }
 
+    public void hasbeenDonNow() {
+        if (hasBeenDone) {
+            input.nextLine();
+        }
+    }
+
     public String createDepartment(String type) {
+        hasbeenDonNow();
          System.out.println("Please enter the department of the " + type + " you want to register:");
          department = input.nextLine();
          return department;
     }
 
     public int createGPA() {
+        hasbeenDonNow();
         System.out.println("Please enter the GPA of the intern you want to register:");
         gpa = input.nextInt();
         return gpa;
     }
-    static boolean hasBeenDone;
     
     public String employeeType() {
         if (hasBeenDone) {
@@ -135,7 +146,16 @@ public class IOclass {
            input.nextLine();
            return option;
          }
-
+          public String promoteToWhat() {
+              System.out.println("Please enter the position you would like to promote someone to: ");
+              String position = input.nextLine();
+              return position;
+          }
+           public void setDirectorBenefit() {
+                System.out.println("What would you like the director's benefit to be?");
+                Double benefit = input.nextDouble();
+                Director.benefit = benefit;
+           }   
 
     public void printMenu() {
 
@@ -151,7 +171,8 @@ public class IOclass {
             System.out.println(" 7. Pay the employees net salaries. ");
             System.out.println(" 8. How many employees do we have?  ");
             System.out.println(" 9. Set directors benefit. ");
-            System.out.println(" 10. Quit this program. ");
+            System.out.println(" 10. Promote employee. ");
+            System.out.println(" 11. Quit this program. ");
             System.out.println();
         }
 

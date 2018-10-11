@@ -9,8 +9,6 @@ public class ReusaxCorp {
 
     //private double assets; //for calculating expenses and so on?
 
-    private Scanner input = new Scanner(System.in);
-
     static ArrayList<Employee> employees;
     private IOclass ioRef = new IOclass();
 
@@ -100,7 +98,7 @@ public class ReusaxCorp {
             for (int i = 0; i < employees.size(); i++) {
 
                 if (employees.get(i).getID().equals(ID)) {
-                    employees.get(i).printEmployee();
+                    //employees.get(i).printEmployee();
                     return employees.get(i);
                 } else {
                     System.out.println("An employee of ID " + ID + " is not registered in the system.");
@@ -134,28 +132,6 @@ public class ReusaxCorp {
                 nameEmployee.setName(newName);
                 System.out.println("Name successfully updated to '" + newName + "'.");
             }
-    }
-
-    public void promoteEmployee() {
-        Employee promotEmployee = retrieveEmployee();
-        String position;
-        if (promotEmployee != null) {
-            System.out.println("What position would you like to promote " + promotEmployee.getName() + " to?");
-            position = input.nextLine();
-            if (position.equalsIgnoreCase("employee")) {
-                if (promotEmployee instanceof Intern) {
-                   employees.remove(promotEmployee);
-                   String name = promotEmployee.getName();
-                   String ID = promotEmployee.getID();
-                }
-            }
-            if (position.equalsIgnoreCase("manager")) {
-
-            }
-            if (position.equalsIgnoreCase("director")) {
-
-            }
-        }
     }
 
     public void updateSalary() {
@@ -281,33 +257,119 @@ public class ReusaxCorp {
                     setDirectorBenefit();
                     break;
 
+                case 10:
+                    promoteToWhat();
+                    break;
+
                 default:
                     System.out.println("Option " + option + " is not valid.");
                     System.out.println();
                     break;
             }
-        } while (option != 10);
+        } while (option != 11);
+    }
+
+    public void promoteToWhat() {
+        String position = ioRef.promoteToWhat();
+        if(position.equalsIgnoreCase("employee")) {
+            promoteToEmployee();
+        }
+        if(position.equalsIgnoreCase("manager")) {
+            promoteToManager();
+        }
+        if(position.equalsIgnoreCase("director")) {
+            promoteToDirector();
+        }
     }
 
     public void promoteToEmployee() {
+        Employee myNewEmployee = retrieveEmployee();
 
+        if (myNewEmployee != null) {
+            if (myNewEmployee instanceof Intern) {
+                Intern newIntern = (Intern) myNewEmployee;
+                Employee newEmployee = new Employee(newIntern.getName(), newIntern.getID(), newIntern.grossSalary);
+                employees.remove(newIntern);
+                employees.add(newEmployee);
+                newEmployee.setNetSalary();
+                newEmployee.printEmployee();
+            } else {
+                System.out.println("Sorry you cannot promote " + myNewEmployee.getID() + " to an employee.");
+                System.out.println("You're probably looking to demote, try option 11.");
+            }
+        }
     }
     public void promoteToManager() {
+        Employee myNewEmployee = retrieveEmployee();
 
+        if (myNewEmployee != null) {
+            if (myNewEmployee instanceof Intern) {
+                Intern newIntern = (Intern) myNewEmployee;
+                String degree = ioRef.createDegree("manager");
+                Manager newEmployee = new Manager(newIntern.getName(), newIntern.getID(), newIntern.grossSalary, degree);
+                employees.remove(newIntern);
+                employees.add(newEmployee);
+                newEmployee.setNetSalary();
+                newEmployee.setBonus();
+                newEmployee.printEmployee();
+            } if (myNewEmployee instanceof Director) {
+                System.out.println("Sorry you cannot promote " + myNewEmployee.getID() + " to an employee.");
+                System.out.println("You're probably looking to demote, try option 11.");
+            } else if (!(myNewEmployee instanceof Intern)) {
+                Employee newIntern = myNewEmployee;
+                String degree = ioRef.createDegree("manager");
+                Manager newEmployee = new Manager(newIntern.getName(), newIntern.getID(), newIntern.grossSalary, degree);
+                employees.remove(newIntern);
+                employees.add(newEmployee);
+                newEmployee.setNetSalary();
+                newEmployee.setBonus();
+                newEmployee.printEmployee();
+            }
+        }
     }
     public void promoteToDirector() {
-
+        Employee myNewEmployee = retrieveEmployee();
+        if (myNewEmployee instanceof Intern) {
+            Intern newIntern = (Intern) myNewEmployee;
+            String degree = ioRef.createDegree("director");
+            String department = ioRef.createDepartment("director");
+            Director newEmployee = new Director(newIntern.getName(), newIntern.getID(), newIntern.grossSalary, degree, department);
+            employees.remove(newIntern);
+            employees.add(newEmployee);
+            newEmployee.setNetSalary();
+            newEmployee.setBonus();
+            newEmployee.printEmployee();
+        }
+        if (myNewEmployee instanceof Manager) {
+            Manager newIntern = (Manager) myNewEmployee;
+            String department = ioRef.createDepartment("director");
+            Director newEmployee = new Director(newIntern.getName(), newIntern.getID(), newIntern.grossSalary, newIntern.getDegree(), department);
+            employees.remove(newIntern);
+            employees.add(newEmployee);
+            newEmployee.setNetSalary();
+            newEmployee.setBonus();
+            newEmployee.printEmployee();
+        }
+        if (!(myNewEmployee instanceof Intern) && !(myNewEmployee instanceof Manager)) {
+            Employee newIntern = myNewEmployee;
+            String degree = ioRef.createDegree("director");
+            String department = ioRef.createDepartment("director");
+            Director newEmployee = new Director(newIntern.getName(), newIntern.getID(), newIntern.grossSalary, degree, department);
+            employees.remove(newIntern);
+            employees.add(newEmployee);
+            newEmployee.setNetSalary();
+            newEmployee.setBonus();
+            newEmployee.printEmployee();
+        }
+        else if (myNewEmployee instanceof  Director) {
+            System.out.println("Sorry you cannot promote " + myNewEmployee.getID() + " to an employee.");
+            System.out.println("You're probably looking to demote, try option 11.");
+        }
     }
 
 
 
     public void setDirectorBenefit() {
-        System.out.println("What would you like the director's benefit to be?");
-        Double benefit = input.nextDouble();
-        Director.benefit = benefit;
-
-        for (Employee employee : employees) {
-            System.out.println("Salary total: " + employee.getGrossSalary());
-        }
+         ioRef.setDirectorBenefit();
     }
 }
