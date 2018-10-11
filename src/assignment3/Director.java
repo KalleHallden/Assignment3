@@ -9,8 +9,6 @@ public class Director extends Manager {
         this.department = department;
     }
 
-    //fixa detta
-
     @Override
     public double getNetSalary() {
         if (this.getGrossSalary()< 30000) {
@@ -39,6 +37,7 @@ public class Director extends Manager {
         this.getGrossSalary();
         System.out.println("This is the directors benefit: " + this.benefit);
         System.out.println("This is the new salary: " + this.getGrossSalary());
+        System.out.println("This is department: " + this.department);
     }
 
 }

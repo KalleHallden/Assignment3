@@ -67,7 +67,6 @@ public class ReusaxCorp {
         int gpa = ioRef.createGPA();
         Intern intern = new Intern(name, ID, grossSalary, gpa);
         intern.setNetSalary();
-        intern.setGrossSalary(grossSalary);
         employees.add(intern);
     }
 
@@ -96,10 +95,7 @@ public class ReusaxCorp {
     }
 
     public Employee retrieveEmployee() {
-
-        System.out.println("Please enter the ID of the employee you want to use: ");
-        String ID = input.nextLine();
-
+        String ID = ioRef.retrieveEmployee();
         if (employees.size() > 0) {
             for (int i = 0; i < employees.size(); i++) {
 
@@ -122,6 +118,7 @@ public class ReusaxCorp {
         if (employees.size() > 0) {
             for (int i = 0; i < employees.size(); i++) {
                 employees.get(i).printEmployee();
+                System.out.println("======================================");
             }
         } else {
             System.out.println("No employees registered yet");
@@ -129,29 +126,14 @@ public class ReusaxCorp {
     }
 
 
-    // change name  //this one or the one below?
-
-
     public void updateName() {
-
-        String ID;
         String newName;
-
-        System.out.println("Please enter the ID of the employee whom's name you would like to change: ");
-        ID = input.nextLine();
-
-        for (Employee employee : employees) {
-
-            if (employee.getID().equals(ID)) {
-
-                System.out.println("What would you like to update " + employee.getName() + "'s name to?");
-                newName = input.nextLine();
-                input.nextLine();
-                employee.setName(newName);
-
+        Employee nameEmployee = retrieveEmployee();
+            if (nameEmployee != null) {
+                newName = ioRef.setNewName(nameEmployee.getID());
+                nameEmployee.setName(newName);
                 System.out.println("Name successfully updated to '" + newName + "'.");
             }
-        }
     }
 
     public void promoteEmployee() {
@@ -177,27 +159,15 @@ public class ReusaxCorp {
     }
 
     public void updateSalary() {
-
-        String ID;
         double newSalary;
+        Employee salaryEmployee = retrieveEmployee();
 
-        System.out.println("Please enter the ID of the employee whom's salary you would like to change: ");
-        ID = input.nextLine();
-
-        for (Employee employee : employees) {
-
-            if (employee.getID().equals(ID)) {
-
-                System.out.println("What would you like to update " + employee.getName() + "'s salary to?");
-                newSalary = input.nextDouble();
-                input.nextLine();
-                employee.setGrossSalary(newSalary);
-                employee.setNetSalary();
-
-
-                System.out.println(employee.getName() + "'s salary is updated to: " + newSalary);
+            if (salaryEmployee != null) {
+                newSalary = ioRef.updateSalary(salaryEmployee.getName());
+                salaryEmployee.setGrossSalary(newSalary);
+                salaryEmployee.setNetSalary();
+                System.out.println(salaryEmployee.getName() + "'s salary is updated to: " + newSalary);
             }
-        }
     }
 
 
@@ -232,7 +202,6 @@ public class ReusaxCorp {
             for (int i = 0; i < employees.size(); i++) {
                 employees.get(i).getNetSalary();
                 totalNetSalaries += employees.get(i).getNetSalary();
-
             }
 
             System.out.println("ReusaxCorp's salary expenses are: " + totalNetSalaries + " SEK.");
@@ -272,10 +241,7 @@ public class ReusaxCorp {
 
         do {
             ioRef.printMenu();
-            System.out.print(" Type the option number: ");
-
-            option = input.nextInt();
-            input.nextLine();
+            option = ioRef.getOption();
 
             switch (option) {
 
@@ -323,13 +289,25 @@ public class ReusaxCorp {
         } while (option != 10);
     }
 
+    public void promoteToEmployee() {
+
+    }
+    public void promoteToManager() {
+
+    }
+    public void promoteToDirector() {
+
+    }
+
+
+
     public void setDirectorBenefit() {
         System.out.println("What would you like the director's benefit to be?");
         Double benefit = input.nextDouble();
         Director.benefit = benefit;
 
         for (Employee employee : employees) {
-            System.out.println("Salary total: " + employee.getNetSalary());
+            System.out.println("Salary total: " + employee.getGrossSalary());
         }
     }
 }

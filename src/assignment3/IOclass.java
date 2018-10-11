@@ -59,6 +59,7 @@ public class IOclass {
         return gpa;
     }
     static boolean hasBeenDone;
+    
     public String employeeType() {
         if (hasBeenDone) {
          input.nextLine();
@@ -69,15 +70,19 @@ public class IOclass {
         type = input.nextLine();
 
         if (type.equalsIgnoreCase("Manager")) {
+            hasBeenDone = false;
             return type;
         }
         if (type.equalsIgnoreCase("Director")) {
+            hasBeenDone = false;
             return type;
         }
         if (type.equalsIgnoreCase("Employee")) {
+            hasBeenDone = false; 
             return type;
         }
         if (type.equalsIgnoreCase("Intern")) {
+            hasBeenDone = false;
             return type;
         } else {
             System.out.println("You cannot register an employee of type: " + type);
@@ -103,6 +108,34 @@ public class IOclass {
             }
             return isRegistered;
         }
+
+
+        public double updateSalary(String name) {
+              System.out.println("What would you like to update " + name + "'s salary to?");
+              double newSalary = input.nextDouble();
+              input.nextLine();
+              return newSalary;
+        }
+         public String setNewName(String ID) {
+                 System.out.println("So you messed up.. Please enter the new name for " + ID + ": ");
+             System.out.println("And please make sure it's correct this time..");
+                 name = input.nextLine();
+                 return name;
+         }
+
+         public String retrieveEmployee() {
+             System.out.println("Please enter the ID of the employee you want to use: ");
+             String ID = input.nextLine();
+             return ID;
+         }
+
+         public int getOption() {
+           System.out.print(" Type the option number: ");
+           int option = input.nextInt();
+           input.nextLine();
+           return option;
+         }
+
 
     public void printMenu() {
 
